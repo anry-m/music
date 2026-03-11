@@ -11,6 +11,7 @@ const player = document.getElementById("player");
 const socialSection = document.querySelector(".release-grid");
 
 let activeTrack = null;
+let loopAll = true;
 
 const formatTime = (time) => {
   if (!Number.isFinite(time)) return "0:00";
@@ -80,7 +81,25 @@ playerToggle.addEventListener("click", () => {
 });
 
 audio.addEventListener("ended", () => {
-  updateButtons(false);
+  if (!activeTrack) {
+    updateButtons(false);
+    return;
+  }
+  const currentIndex = tracks.indexOf(activeTrack);
+  const nextTrack = tracks[currentIndex + 1];
+  if (!nextTrack) {
+    if (loopAll && tracks.length > 0) {
+      loadTrack(tracks[0]);
+      audio.play();
+      updateButtons(true);
+      return;
+    }
+    updateButtons(false);
+    return;
+  }
+  loadTrack(nextTrack);
+  audio.play();
+  updateButtons(true);
 });
 
 audio.addEventListener("timeupdate", () => {
@@ -97,6 +116,7 @@ playerRange.addEventListener("input", (event) => {
   const percent = Number(event.target.value);
   audio.currentTime = (percent / 100) * audio.duration;
 });
+
 
 shareHero.addEventListener("click", async () => {
   await navigator.clipboard.writeText(window.location.href);
