@@ -332,6 +332,25 @@ main {
   min-width: 0;
 }
 
+.player__volume {
+  width: 90px;
+  margin-right: 6px;
+}
+
+.player__range--volume {
+  height: 4px;
+}
+
+.player__range--volume::-webkit-slider-thumb {
+  width: 14px;
+  height: 14px;
+}
+
+.player__range--volume::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+}
+
 .player__range {
   width: 100%;
   appearance: none;
@@ -394,6 +413,10 @@ main {
   }
 
   .player__scrub {
+    display: none;
+  }
+
+  .player__volume {
     display: none;
   }
 

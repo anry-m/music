@@ -5,6 +5,7 @@ const playerArtist = document.getElementById("player-artist");
 const playerToggle = document.getElementById("player-toggle");
 const playerTime = document.getElementById("player-time");
 const playerRange = document.getElementById("player-range");
+const playerVolume = document.getElementById("player-volume");
 
 const shareHero = document.getElementById("share-hero");
 const player = document.getElementById("player");
@@ -53,6 +54,14 @@ const loadTrack = (track) => {
   playerRange.value = 0;
   playerRange.style.background = "linear-gradient(90deg, var(--accent) 0%, #d8d8d8 0%)";
 };
+
+const setVolumeUI = (value) => {
+  playerVolume.value = value;
+  playerVolume.style.background = `linear-gradient(90deg, var(--accent) ${value}%, #d8d8d8 ${value}%)`;
+};
+
+audio.volume = Number(playerVolume.value) / 100;
+setVolumeUI(playerVolume.value);
 
 tracks.forEach((track) => {
   const button = track.querySelector(".track__play");
@@ -115,6 +124,12 @@ playerRange.addEventListener("input", (event) => {
   if (!Number.isFinite(audio.duration) || audio.duration <= 0) return;
   const percent = Number(event.target.value);
   audio.currentTime = (percent / 100) * audio.duration;
+});
+
+playerVolume.addEventListener("input", (event) => {
+  const value = Number(event.target.value);
+  audio.volume = value / 100;
+  setVolumeUI(value);
 });
 
 
