@@ -163,6 +163,21 @@ const adjustPlayerOffset = () => {
   document.documentElement.style.setProperty("--player-offset", `${needed}px`);
 };
 
-window.addEventListener("load", adjustPlayerOffset);
-window.addEventListener("resize", adjustPlayerOffset);
-window.addEventListener("scroll", adjustPlayerOffset);
+let offsetScheduled = false;
+const scheduleOffset = () => {
+  if (offsetScheduled) return;
+  offsetScheduled = true;
+  requestAnimationFrame(() => {
+    offsetScheduled = false;
+    adjustPlayerOffset();
+  });
+};
+
+window.addEventListener("load", scheduleOffset);
+window.addEventListener("resize", scheduleOffset);
+
+if ("ResizeObserver" in window) {
+  const ro = new ResizeObserver(scheduleOffset);
+  if (player) ro.observe(player);
+  if (socialSection) ro.observe(socialSection);
+}
