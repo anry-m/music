@@ -79,7 +79,13 @@ tracks.forEach((track) => {
 });
 
 playerToggle.addEventListener("click", () => {
-  if (!activeTrack) return;
+  if (!activeTrack) {
+    if (tracks.length === 0) return;
+    loadTrack(tracks[0]);
+    audio.play();
+    updateButtons(true);
+    return;
+  }
   if (audio.paused) {
     audio.play();
     updateButtons(true);
