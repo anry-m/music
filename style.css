@@ -117,6 +117,20 @@ main {
   font-weight: 500;
 }
 
+.release__badge {
+  align-self: flex-start;
+  margin-bottom: 10px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 600;
+  display: inline-flex;
+}
+
 .release__byline {
   margin: 0 0 16px;
   font-style: italic;
